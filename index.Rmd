@@ -1,0 +1,17 @@
+---
+title: "Ali Martin"
+image: "ali.jpg"
+links:
+  - label: LinkedIn
+    url: "https://www.linkedin.com/in/ali-martin-75817617b/"
+  - label: GitHub
+    url: "https://github.com/aomartin923"
+  - label: Email
+    url: "mailto:aomartin@ucsb.edu"
+site: distill::distill_website
+output:
+  postcards::jolla
+---
+ 
+I am a Master's Student studying Conservation Planning and Environmental Management at University of California, Santa Barbara. 
+
