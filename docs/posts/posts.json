@@ -1,19 +1,36 @@
 [
   {
+    "path": "posts/2022-02-25-portfolio/",
+    "title": "Project 1",
+    "description": "One of the projects I've completed using R programming language.",
+    "author": [
+      {
+        "name": "Ali Martin",
+        "url": "https://github.com/aomartin923/esm244_a2_task2"
+      }
+    ],
+    "date": "2022-02-25",
+    "categories": [],
+    "contents": "\nOverview:\nUsing data from the Environmental Data Initiative repository: “The Sierra Lakes Inventory Project (SLIP)”, I created two graphs to explore the abundance of amphibians within all water bodies such as lakes, ponds, and marshes. My first graph shows the total number of mountain yellow-legged frogs each year across all water bodies. My second graph shows a column graph containing total counts of adult and sub-adult frogs observed in the top 5 lakes with the most counts.\n\n\nhide\n\nknitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE )\n\nlibrary(tidyverse)\nlibrary(here)\nlibrary(lubridate)\nlibrary(janitor)\n\n\n\n\n\nhide\n\n# Read in the amphibians data\namphibians <- read_csv(here('data','sierra_amphibians.csv'))%>% clean_names()\n\n\n\nPart 1: Total Rana Muscosa Count by Year and Life Stage\n\n\nhide\n\n#filter to only include rana muscosa and remove egg mass \nrana_muscosa <- amphibians %>% \n  filter(amphibian_species == \"RAMU\", amphibian_life_stage != \"EggMass\") %>% \n  #change the date\n  mutate(survey_date = mdy(survey_date)) %>% \n  #add new column year\n  mutate(year = year(survey_date))\n\n\n\n\n\nhide\n\n#plot the graph \nrana_muscosa %>% \n  group_by(year, amphibian_life_stage) %>% #group by year and life stage\n  summarize(amphibian_count = n()) %>%\n  ggplot(aes(x = as.factor(year), y = amphibian_count)) + \n  geom_bar(aes(fill = amphibian_life_stage), stat = \"identity\") +\n    labs(x = \"Year\",\n         y = \" Total Frog Count by Life Stage\", fill = \"Life Stage\") + \n  ggtitle(\"Number of frogs (rana muscosa) within each life stage from 1995-2002\")\n\n\n\n\nPart 2: Total Sub-Adult and Adult Rana Muscosa Frogs\n\n\nhide\n\n#reformat lake id \nrana_muscosa$lake_id <-sub(\"^\",\"Lake \",rana_muscosa$lake_id)\n\n\n\n\n\nhide\n\n#Wrangle the data a bit\ntotal_adult_amphibians <- rana_muscosa %>% \n  filter(amphibian_life_stage !=\"Tadpole\") %>% \ngroup_by (lake_id) %>% \n  summarize(total_adult_amphibians = sum(amphibian_number, na.rm = TRUE)) %>% \nslice_max(total_adult_amphibians, n = 5)\n\n\n\n\n\nhide\n\n# Plot the graph\ntotal_adult_amphibians %>% \nmutate(lake_id = fct_reorder(lake_id, total_adult_amphibians)) %>% \nggplot ( aes (x =total_adult_amphibians, \n            y = lake_id, label = total_adult_amphibians)) +\n  geom_col(na.rm = FALSE, color = \"khaki4\", fill= \"gold2\") +\n  theme_bw() + \n  labs( x = \"Total Adult Frogs per Site\", y = \"Lake Site\" , title = \"Total Adult Mountain Yellow-Legged Frogs in 5 Lakes\")\n\n\n\n\nData Citation: Knapp, R.A., C. Pavelka, E.E. Hegeman, and T.C. Smith. 2020. The Sierra Lakes Inventory Project: Non-Native fish and community composition of lakes and ponds in the Sierra Nevada, California ver 2. Environmental Data Initiative. https://doi.org/10.6073/pasta/d835832d7fd00d9e4466e44eea87fab3\n\n\n\n",
+    "preview": "posts/2022-02-25-portfolio/portfolio_files/figure-html5/unnamed-chunk-3-1.png",
+    "last_modified": "2022-02-25T15:04:19-08:00",
+    "input_file": {}
+  },
+  {
     "path": "posts/2022-01-21-welcome/",
     "title": "welcome",
-    "description": "A short description of the post.",
+    "description": "My first blog post",
     "author": [
       {
         "name": "Ali Martin",
         "url": {}
       }
     ],
-    "date": "2022-01-21",
+    "date": "2022-02-06",
     "categories": [],
-    "contents": "\nDistill is a publication format for scientific and technical writing, native to the web.\nLearn more about using Distill at https://rstudio.github.io/distill.\n\n\n\n",
+    "contents": "\nHello, this is my first blog post. This week was incredibly stressful because I had a lot of work to do and a lot of coding! However, I was able to get it all done on time and it was very rewarding. While I was feeling overwhelmed this whole week, I was able to get a lot of work done.\n\n\n\n",
     "preview": {},
-    "last_modified": "2022-01-21T18:33:54-08:00",
+    "last_modified": "2022-02-06T21:13:16-08:00",
     "input_file": {}
   }
 ]
