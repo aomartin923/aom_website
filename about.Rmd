@@ -1,10 +1,16 @@
 ---
-title: "About this site"
+title: "About Me!"
 description: |
-  Some additional details about the website
+
 ---
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = FALSE)
 ```
+
+## Experience:
+I am an alumni from University of California, Irvine and have had 3+ years in the sustainable non-profit sector where I worked as a project manager in Global Sustainability Research. I have experience in data analysis among several coding languages and platforms such as: R, MATLAB, QGIS, and ArcGIS. 
+
+## Interests:
+Some of my favorite hobbies include painting, horseback riding, hiking, and surfing. I enjoy taking care of my plants and my pet snake, Lola. 
 

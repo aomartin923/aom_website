@@ -1,7 +1,7 @@
 name: "Ali Martin"
-title: "mfeo"
+title: "Ali Martin's page"
 description: |
-  mfeo
+  Ali Martin's distill website 
 output_dir: "docs"
 navbar:
   right:

@@ -1,6 +1,6 @@
 ---
 title: "Ali Martin"
-image: "ali.jpg"
+image: "ali1.jpg"
 links:
   - label: LinkedIn
     url: "https://www.linkedin.com/in/ali-martin-75817617b/"
@@ -13,5 +13,9 @@ output:
   postcards::jolla
 ---
  
-I am a Master's Student studying Conservation Planning and Environmental Management at University of California, Santa Barbara. 
+Hello, my name is Ali and welcome to my personal distill website! 
+
+I am currently in my first year as a Master's student studying Environmental Science and Management with a specialization in Conservation Planning. 
+
+Here is all of my work that I have done in R. 
 

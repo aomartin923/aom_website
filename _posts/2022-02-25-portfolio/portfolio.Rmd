@@ -1,0 +1,100 @@
+---
+title: "Project 1"
+description: |
+  One of the projects I've completed using R programming language.
+author:
+  - name: Ali Martin
+    url: https://github.com/aomartin923/esm244_a2_task2
+date: 2022-02-25
+output:
+  distill::distill_article:
+    self_contained: false
+    theme: yeti
+    code_folding: hide
+    
+---
+
+## Overview:
+
+Using data from the Environmental Data Initiative repository: “The Sierra Lakes Inventory Project (SLIP)", I created two graphs to explore the abundance of amphibians within all water bodies such as lakes, ponds, and marshes. My first graph shows the total number of mountain yellow-legged frogs each year across all water bodies. My second graph shows a column graph containing total counts of adult and sub-adult frogs observed in the top 5 lakes with the most counts. 
+
+```{r setup, include=TRUE, message = FALSE, warning = FALSE}
+knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE )
+
+library(tidyverse)
+library(here)
+library(lubridate)
+library(janitor)
+```
+
+```{r}
+# Read in the amphibians data
+amphibians <- read_csv(here('data','sierra_amphibians.csv'))%>% clean_names()
+```
+
+## Part 1: Total Rana Muscosa Count by Year and Life Stage
+
+```{r}
+#filter to only include rana muscosa and remove egg mass 
+rana_muscosa <- amphibians %>% 
+  filter(amphibian_species == "RAMU", amphibian_life_stage != "EggMass") %>% 
+  #change the date
+  mutate(survey_date = mdy(survey_date)) %>% 
+  #add new column year
+  mutate(year = year(survey_date))
+
+ 
+  
+```
+
+```{r}
+#plot the graph 
+rana_muscosa %>% 
+  group_by(year, amphibian_life_stage) %>% #group by year and life stage
+  summarize(amphibian_count = n()) %>%
+  ggplot(aes(x = as.factor(year), y = amphibian_count)) + 
+  geom_bar(aes(fill = amphibian_life_stage), stat = "identity") +
+    labs(x = "Year",
+         y = " Total Frog Count by Life Stage", fill = "Life Stage") + 
+  ggtitle("Number of frogs (rana muscosa) within each life stage from 1995-2002")
+   
+         
+         
+  
+```
+
+## Part 2: Total Sub-Adult and Adult Rana Muscosa Frogs
+
+
+```{r}
+#reformat lake id 
+rana_muscosa$lake_id <-sub("^","Lake ",rana_muscosa$lake_id)
+```
+
+
+```{r}
+#Wrangle the data a bit
+total_adult_amphibians <- rana_muscosa %>% 
+  filter(amphibian_life_stage !="Tadpole") %>% 
+group_by (lake_id) %>% 
+  summarize(total_adult_amphibians = sum(amphibian_number, na.rm = TRUE)) %>% 
+slice_max(total_adult_amphibians, n = 5)
+```
+
+```{r}
+# Plot the graph
+total_adult_amphibians %>% 
+mutate(lake_id = fct_reorder(lake_id, total_adult_amphibians)) %>% 
+ggplot ( aes (x =total_adult_amphibians, 
+            y = lake_id, label = total_adult_amphibians)) +
+  geom_col(na.rm = FALSE, color = "khaki4", fill= "gold2") +
+  theme_bw() + 
+  labs( x = "Total Adult Frogs per Site", y = "Lake Site" , title = "Total Adult Mountain Yellow-Legged Frogs in 5 Lakes")
+```
+
+
+
+**Data Citation:** Knapp, R.A., C. Pavelka, E.E. Hegeman, and T.C. Smith. 2020. The Sierra Lakes Inventory Project: Non-Native fish and community composition of lakes and ponds in the Sierra Nevada, California ver 2. Environmental Data Initiative. https://doi.org/10.6073/pasta/d835832d7fd00d9e4466e44eea87fab3
+
+
+

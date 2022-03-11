@@ -1,10 +1,10 @@
 ---
-title: "welcome"
+title: "Welcome"
 description: |
-  A short description of the post.
+  My first blog post
 author:
   - name: Ali Martin
-date: 2022-01-21
+date: 2022-02-06
 output:
   distill::distill_article:
     self_contained: false
@@ -15,8 +15,6 @@ output:
 knitr::opts_chunk$set(echo = FALSE)
 ```
 
-Distill is a publication format for scientific and technical writing, native to the web.
-
-Learn more about using Distill at <https://rstudio.github.io/distill>.
+Hello, this is my first blog post. This week was incredibly stressful because I had a lot of work to do and a lot of coding! However, I was able to get it all done on time and it was very rewarding. While I was feeling overwhelmed this whole week, I was able to get a lot of work done. 
 
 
