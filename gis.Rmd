@@ -1,0 +1,6 @@
+---
+title: "GIS"
+listing: projects
+---
+
+These are some of my favorite maps I've created using QGIS:

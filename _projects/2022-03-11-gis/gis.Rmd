@@ -1,0 +1,25 @@
+---
+title: "Assessing Sea level rise in Santa Barbara"
+description: |
+  A project I made in ESM 263 course using QGIS
+author:
+  - name: Ali Martin
+date: 2022-03-11
+output:
+  distill::distill_article:
+    self_contained: false
+---
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+
+library(here)
+```
+
+```{r}
+knitr::include_graphics(here("sea_rise_sb.jpg"))
+```
+
+
+

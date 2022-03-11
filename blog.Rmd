@@ -4,4 +4,4 @@ listing: posts
 ---
  
  
- This is all of the work I will be showing using R and QGIS to showcase my data analysis and visualization skills
+ This is all of the work I will be showing using R  to showcase my data analysis and visualization skills

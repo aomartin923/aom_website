@@ -9,8 +9,10 @@ navbar:
       href: index.html
     - text: "About"
       href: about.html
-    - text: "Portfolio"
+    - text: "R programming"
       href: blog.html
+    - text: "GIS"
+      href: gis.html
 
 output: distill::distill_article
 theme: postcards.css

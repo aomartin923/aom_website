@@ -5,22 +5,29 @@
       "title": "About Me!",
       "author": [],
       "contents": "\nExperience:\nI am an alumni from University of California, Irvine and have had 3+ years in the sustainable non-profit sector where I worked as a project manager in Global Sustainability Research. I have experience in data analysis among several coding languages and platforms such as: R, MATLAB, QGIS, and ArcGIS.\nInterests:\nSome of my favorite hobbies include painting, horseback riding, hiking, and surfing. I enjoy taking care of my plants and my pet snake, Lola.\n\n\n\n",
-      "last_modified": "2022-03-11T12:44:26-08:00"
+      "last_modified": "2022-03-11T14:36:06-08:00"
     },
     {
       "path": "blog.html",
       "title": "R programming",
       "author": [],
-      "contents": "\nThis is all of the work I will be showing using R and QGIS to showcase my data analysis and visualization skills\n\n\n\n",
-      "last_modified": "2022-03-11T12:44:27-08:00"
+      "contents": "\nThis is all of the work I will be showing using R to showcase my data analysis and visualization skills\n\n\n\n",
+      "last_modified": "2022-03-11T14:51:29-08:00"
+    },
+    {
+      "path": "gis.html",
+      "title": "GIS",
+      "author": [],
+      "contents": "\nThese are some of my favorite maps I’ve created using QGIS:\n\n\n\n",
+      "last_modified": "2022-03-11T14:36:08-08:00"
     },
     {
       "path": "index.html",
       "title": "Ali Martin",
       "author": [],
-      "contents": "\n\n          \n          \n          Ali Martin's page\n          \n          \n          Home\n          About\n          Portfolio\n          ☰\n          \n          \n      \n        \n          \n            Ali Martin\n          \n          \n            \n              Hello, my name is Ali and welcome to my personal distill website!\n              I am currently in my first year as a Master’s student studying Environmental Science and Management with a specialization in Conservation Planning.\n              Here is all of my work that I have done in R.\n            \n            \n              Hello, my name is Ali and welcome to my personal distill website!\n              I am currently in my first year as a Master’s student studying Environmental Science and Management with a specialization in Conservation Planning.\n              Here is all of my work that I have done in R.\n            \n          \n\n          \n            \n              \n                  \n                    \n                      LinkedIn\n                    \n                  \n                \n                                \n                  \n                    \n                      GitHub\n                    \n                  \n                \n                                \n                  \n                    \n                      Email\n                    \n                  \n                \n                              \n          \n\n          \n            \n              \n                                \n                  \n                    LinkedIn\n                  \n                \n                                \n                  \n                    GitHub\n                  \n                \n                                \n                  \n                    Email\n                  \n                \n                              \n            \n          \n        \n      \n    \n\n    \n    \n    ",
-      "last_modified": "2022-03-11T12:44:27-08:00"
+      "contents": "\n\n          \n          \n          Ali Martin's page\n          \n          \n          Home\n          About\n          R programming\n          GIS\n          ☰\n          \n          \n      \n        \n          \n            Ali Martin\n          \n          \n            \n              Hello, my name is Ali and welcome to my personal distill website!\n              I am currently in my first year as a Master’s student studying Environmental Science and Management with a specialization in Conservation Planning.\n              Here is all of my work that I have done in R.\n            \n            \n              Hello, my name is Ali and welcome to my personal distill website!\n              I am currently in my first year as a Master’s student studying Environmental Science and Management with a specialization in Conservation Planning.\n              Here is all of my work that I have done in R.\n            \n          \n\n          \n            \n              \n                  \n                    \n                      LinkedIn\n                    \n                  \n                \n                                \n                  \n                    \n                      GitHub\n                    \n                  \n                \n                                \n                  \n                    \n                      Email\n                    \n                  \n                \n                              \n          \n\n          \n            \n              \n                                \n                  \n                    LinkedIn\n                  \n                \n                                \n                  \n                    GitHub\n                  \n                \n                                \n                  \n                    Email\n                  \n                \n                              \n            \n          \n        \n      \n    \n\n    \n    \n    ",
+      "last_modified": "2022-03-11T14:51:10-08:00"
     }
   ],
-  "collections": ["posts/posts.json"]
+  "collections": ["posts/posts.json", "projects/projects.json"]
 }
