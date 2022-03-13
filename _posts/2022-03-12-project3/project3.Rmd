@@ -1,0 +1,207 @@
+---
+title: "Linear Regression"
+description: |
+  One of my projects using non linear least squares.
+author:
+  - name: Ali Martin
+date: 2022-03-12
+output:
+  distill::distill_article:
+     self_contained: false
+---
+
+```{r setup, include=FALSE, message = FALSE, warning = FALSE}
+knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE)
+
+library(tidyverse)
+library(here)
+library(purrr)
+library(Metrics)
+library(janitor)
+library(broom)
+library(kableExtra)
+library(modelr)
+```
+
+## **Overview:**
+
+I will be using data  from Lightfood and Whitford sampled by pitfall traps at Jornada Basin LTER (New Mexico) site to estimate parameters of the snout to vent length to weight model on lizard populations. We first fit this model on all  species of lizards in the study, and highlighted a subset of the data that only fits the model on male Western Whiptail lizard species (Cnemidophorus tigrisatus). 
+
+## **NLS Model**
+
+Snout-to-Vent-Length (SVL) to Weight (W) model: 
+
+$$
+W = a(SVL)^b
+$$
+
+
+## **Part 1:** Length to Weight Model
+
+
+```{r}
+lizards <- read_csv(here("data","lizard.csv")) %>% 
+  mutate(log_length =log(SV_length),
+         log_weight = log(weight)) %>% 
+  clean_names() %>% drop_na()
+```
+
+
+
+```{r}
+#estimate parameters from coefficients
+parameters <- lm(log_weight ~ log_length, data = lizards)
+
+
+```
+
+
+```{r}
+lizard_coeff <- coef(parameters) 
+
+```
+
+
+
+```{r}
+#create function
+lizard_model <- function(a, sv_length, b){
+  weight = a*sv_length^b
+  return(weight)
+}
+
+# perform non linear regression using purrr
+
+lizard_nls <- nls(weight ~ lizard_model(a, sv_length, b),
+                     data = lizards,
+                     start = list(b= lizard_coeff[2],
+                                  a = exp(lizard_coeff[1])))
+
+```
+
+
+## **Part 2:** Present Fitted Model on a  Table
+
+```{r}
+# create table 
+lizard_nls_tidy <- tidy(lizard_nls) 
+  
+lizard_nls_tidy$p.value <- ifelse(lizard_nls_tidy$p.value < .001, paste("< .001"))
+
+lizard_nls_tidy%>% 
+ kable(col.names = c("Parameter",
+                     "Estimate",
+                     "Standard Error",
+                     "Statistic",
+                     "P-Value"), digits = 5, caption = "Table 1: The table shows the predicted parameters of the Non Linear Regression Model.") %>% 
+  kable_classic(full_width = FALSE)
+```
+
+The coefficient for a is `r round(lizard_nls_tidy[2,2], 4)` while the coefficient for b is `r round(lizard_nls_tidy[1,2], 4)` 
+
+```{r}
+# generate predictions from data
+
+model_prediction <- augment(lizard_nls)
+
+
+#plot predictions by sex
+ggplot(data = lizards,
+       aes(x =sv_length,
+           y = weight,
+           color = sex))+
+  geom_jitter(size = 1)+
+  scale_color_manual(values = c('plum1','lightblue1', "grey58")) +
+  #include NLS line
+  geom_line(data = model_prediction,
+            aes(x= sv_length,
+                y = .fitted,
+                color = "NLS Model")) +
+  theme_minimal()+
+  labs(x = "Lizard Length from Snout to Vent (mm)", 
+       y = 'Weight (g)', 
+       title = "Lizard Weight as a Function of Snout to Vent Length")
+
+
+  
+```
+
+## **Part 3:** Male Western Whiptail lizards NLS 
+
+```{r}
+# filter for male western whiptails
+whiptails <- lizards %>% 
+  filter(sex =="M", spp =="CNTI")
+#estimate coefficients
+whiptails_coeff <- whiptails %>% 
+  mutate(log_weight = log(weight)) %>% 
+  mutate(log_length = log(sv_length))
+
+# linear regression model 
+whiptails_estimate <- lm(log_weight ~ log_length, data = whiptails)
+
+whiptails_coeff <- coef(whiptails_estimate)
+#create NLS 
+whiptails_nls <- nls(weight ~ lizard_model(a, sv_length, b),
+                     data = whiptails,
+                     start = list(b= whiptails_coeff[2],
+                                  a = exp(whiptails_coeff[1])))
+
+#tidy table
+whiptails_tidy <- tidy(whiptails_nls)
+
+#create finalized table 
+whiptails_tidy %>% 
+  kable(col.names = c("Terms",
+                      "Coefficients",
+                      "Standard Error",
+                      "Statistic",
+                      "P-Value"), digits = 5) %>% 
+  kable_classic(full_width = F)
+
+#calculate RMSE for whiptails and compare with lizards data
+whiptails_rmse <- rmse(whiptails_nls, data = whiptails)
+all_rmse <- rmse(lizard_nls, data = whiptails)
+
+
+
+
+
+
+```
+
+
+```{r}
+
+#augment the data
+whiptails_prediction <- augment(whiptails_nls)
+
+#create ggplot
+ggplot(data =whiptails,
+       aes(x =sv_length,
+           y = weight,
+           color = sex))+
+  geom_jitter(size = 1)+
+  scale_color_manual(values = c('darkslategrey','grey58', "red")) +
+  #include nls line
+  geom_line(data =whiptails_prediction,
+            aes(x = sv_length,
+                y = .fitted,
+                color = "Whiptails NLS")) +
+  #include NLS line from original data
+  geom_line(data = model_prediction,
+            aes(x= sv_length,
+                y = .fitted,
+                color = "Original NLS")) +
+  theme_minimal()+
+  labs(x = "Whiptail Length (mm)", 
+       y = 'Weight (g)' ) +
+  ggtitle("Length and Weight of Male Whiptail Lizards with NLS from Whiptails and Original Data")
+```
+
+**Caption** "The plot above shows the comparison of lizard length from snout to vent and weight of male Whiptail lizards. The grey line shows the NLS model fitted for the entire lizard dataset, and the red line shows the NLS model for Whiptail lizards only. The RMSE for the original lizards data is `r round(all_rmse, 4)`, and the RMSE of the male whiptails is `r round(whiptails_rmse, 4)`. We would prefer to use the lizard RMSE because it is a lower value overall, so it does a better job of fitting the data to the model. 
+
+
+
+**Data Citation**: Lightfoot, D. and W.G. Whitford. 2020. Lizard pitfall trap data from 11 NPP study locations at the Jornada Basin LTER site, 1989-2006 ver 37. Environmental Data Initiative. https://doi.org/10.6073/pasta/4a6e258fb49c31e222ecbbcfd128967f
+

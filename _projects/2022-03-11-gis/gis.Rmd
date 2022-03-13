@@ -18,7 +18,7 @@ library(here)
 ```
 
 ```{r}
-knitr::include_graphics(here("sea_rise_sb.jpg"))
+knitr::include_graphics("sea_rise_sb.jpg")
 ```
 
 

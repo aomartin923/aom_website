@@ -1,5 +1,5 @@
 ---
-title: "Project 1"
+title: "Time Analysis of Salmon at Willamette Fish Ladder"
 description: |
  One of my projects using R programming
 author:
@@ -8,6 +8,7 @@ date: 2022-02-06
 output:
   distill::distill_article:
     self_contained: false
+    code_folding: hide
 ---
 
 ```{r setup, include=FALSE}
@@ -26,13 +27,13 @@ library(janitor)
 
 
 ```{r, echo = FALSE, results = 'markup'}
-knitr::include_graphics(here("data","salmon.jpeg"))
+knitr::include_graphics("salmon.jpeg")
 ```
 
 **Photo 1:** Columbia River Salmon Run, photo courtesy of: U.S Fish and Wildlife
 
 ```{r, echo = FALSE, results = 'markup'}
-knitr::include_graphics(here("data","fish_ladder.jpeg"))
+knitr::include_graphics("fish_ladder.jpeg")
 ```
 
 **Photo 2** Map of Willamette Fish Ladder, courtesy of US Army Corps of Engineers, Portland District

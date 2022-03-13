@@ -1,0 +1,115 @@
+---
+title: "Data Visualization for Mono Lake Levels"
+description: |
+  A beautiful data visualization of Mono Lake levels.
+author:
+  - name: Ali Martin
+date: 2022-03-12
+output:
+  distill::distill_article:
+    self_contained: false
+    code_folding: hide
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, messages = FALSE, warning = FALSE)
+
+library(tidyverse)
+library(here)
+library(kableExtra)
+library(broom)
+library(janitor)
+library(effsize)
+```
+
+## Mono Lake Levels
+
+```{r, include = FALSE}
+mono_lake_levels <- read_csv(here("data", "mono_lake_annual_levels.csv") , skip = 5) %>% clean_names() %>% mutate(year = as.numeric(year))
+```
+
+```{r}
+#plot basic graph
+ ggplot(data = mono_lake_levels, aes(x = year, y = lake_level_feet_above_sea_level)) +
+  labs (x = "Year" ,
+  y = "Lake level (feet above sea level)" , 
+  title = "Mono Lake Levels from 1850 to 2017") +
+  geom_line(color = "aquamarine2",
+            size =1 ) +
+  #add fancy stuff like ribbon plots to fill in the plot
+geom_ribbon(aes(ymin = 6355,
+                ymax = lake_level_feet_above_sea_level),
+            alpha = 0.4,
+            fill = "powderblue") +
+  theme_minimal() +
+
+#change background and margin color
+theme(panel.background = element_rect(fill = "azure1"),
+panel.border = element_rect(fill = NA),
+plot.background = element_rect(fill = "ivory"),
+      
+
+#change border width
+plot.margin = margin(t = 0.6,
+                     r = 0.6,
+                     b = 0.6,
+                     l = 0.6,
+                     unit = "cm"),
+
+plot.title = element_text (face = "bold",
+                           hjust = 0.5,
+                           size = 15,
+                           color = "grey30")) + 
+  scale_x_continuous(limits = c(1850, 2017), 
+                     expand = c(0,0),
+                     breaks = seq(1850, 2017, by=25)) +
+  scale_y_continuous(limits = c(6355,6440), 
+                     expand = c(0,0),
+                     breaks = seq(6350,6430, by=20)) +
+  annotate("text", 
+           label = "1941:\n LA begins diverting water", 
+           y = 6430, 
+           x = 1939,
+           hjust = 0,
+           size = 3.5,
+           color = "indianred3") +
+  
+  geom_line (aes(y = 6360),
+             color = "indianred3",
+             alpha = 1,
+             linetype = "dotted") +
+  
+  annotate("text",
+           label = "6,377 ft: Land bridges emerge between mainland and islands",
+           x = 1852,
+           y = 6375,
+           color = "orangered1",
+           size = 3,
+           hjust = 0) +
+  geom_line(aes(y = 6377),
+            color = "indianred3",
+            alpha = 1,
+            linetype = "dotted") +
+  annotate("text",
+           label = "6360 ft: bird populations threatened",
+           x = 1852,
+           y = 6358,
+           color = "orangered1",
+           size = 3,
+           hjust = 0 ) +
+   geom_segment(aes(x = 1941, 
+                   xend = 1941,
+                   y = 6419, 
+                   yend = 6426),
+               color = "indianred4",
+               arrow = arrow(ends = "first",
+                             type = "open",
+                             length = unit(0.15,"cm")
+                             ))
+               
+```
+
+
+**Figure Caption:** The above graph shows the annual lake levels of Mono Lake, California from the years 1850 to 2017 (Mono Basin Clearinghouse). The graph also highlights important historical events (labeled in red) surrounding the lake. 
+
+
