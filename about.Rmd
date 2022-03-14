@@ -1,16 +1,16 @@
 ---
-title: "About Me!"
+title: "About Me"
 description: |
-
+ Here is some additional information about me
 ---
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = FALSE)
 ```
 
-## Experience:
-I am an alumni from University of California, Irvine and have had 3+ years in the sustainable non-profit sector where I worked as a project manager in Global Sustainability Research. I have experience in data analysis among several coding languages and platforms such as: R, MATLAB, QGIS, and ArcGIS. 
+## Resume
 
-## Interests:
-Some of my favorite hobbies include painting, horseback riding, hiking, and surfing. I enjoy taking care of my plants and my pet snake, Lola. 
+```{r}
+xfun::embed_file("Martin_Resume2022.pdf", text = "View my Resume here!")
+```
 
